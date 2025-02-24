@@ -1,17 +1,33 @@
 # https://docs.python.org/3/library/string.html#formatexamples
 
-total_de_tentativas = 3
+import random
 rodada = 1
 
+print("\n*********************************")
+print("Bem vindo ao jogo de Adivinhação!")
+print("*********************************\n")
+
+username = str(input("Digite seu nome: "))
+
+numero_secreto = round(random.randrange(1,101))
+# random.seed(100) - seed define um número aleatório, usando a mesma seed pode-se gerar o mesmo número
+total_de_tentativas = 0
+pontos = 1000
+
+print("\nNíveis de dificuldade:")
+print("\n(1) Fácil (2) Médio (3) Difícil")
+
+nivel = int(input("\nDefina o nível: "))
+
+if (nivel == 1):
+    total_de_tentativas = 20
+elif (nivel == 2):
+    total_de_tentativas = 10
+else:
+    total_de_tentativas = 5
+
 for rodada in range(1, total_de_tentativas + 1):
-    print("\n*********************************")
-    print("Bem vindo ao jogo de Adivinhação!")
-    print("*********************************")
-
     print("\nTentativa {} de {}\n".format(rodada, total_de_tentativas))
-
-    numero_secreto = 42
-    username = "Alan"
 
     chute_str = input("Digite o seu número: ")
     print("Você digitou: ", chute_str)
@@ -26,14 +42,16 @@ for rodada in range(1, total_de_tentativas + 1):
     menor = chute < numero_secreto
 
     if (acertou):
-        print("\nParabéns", username + ", você acertou!")
+        print("\nParabéns, {}, você acertou e fez {} pontos".format(username, pontos))
         break
     else:
         if (maior):
-            print("Você errou! O seu chute foi maior que o número secreto.")
+            print("\nVocê errou! O seu chute foi maior que o número secreto.")
         elif (menor):
-            print("Você errou! O seu chute foi menor que o número secreto.")
+            print("\nVocê errou! O seu chute foi menor que o número secreto.")
+        pontos_perdidos = abs(numero_secreto - chute)
+        pontos = pontos - pontos_perdidos
     
 
 
-print("\nFim do jogo!\n")
+print("\nFim do jogo,", username + "!\n")
